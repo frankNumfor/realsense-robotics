@@ -132,17 +132,22 @@ Add a `PointCloud2` display subscribed to `/rtabmap/cloud_map` to see the 3D map
 
 ## Results
 
-![SLAM running in a robotics lab — RViz2 and RTAB-Map side by side](phase3_slam.png)
+### RTAB-Map — Loop Closure and 3D Feature Map
 
-The screenshot shows SLAM running in a robotics lab after exploring the environment. Key indicators visible:
+![RTAB-Map showing loop closure detection and 3D feature map](phase3_slam_rtabmap.png)
 
-- **871 keyframes** accumulated (Node ID counter in RTAB-Map, top-right panel)
-- **2 loop closures** detected — visible in the RTAB-Map header (`New ID = 871 [2]`)
-- **Camera trajectory** — the green/pink line in the RTAB-Map 3D panel traces the path the camera took through the space
-- **3D point cloud map** — the accumulated reconstruction visible in RViz2 (left), showing the lab walls, desk, and equipment
-- **31 fps** — running in real time throughout
+The RTAB-Map window shows three panels:
+- **Loop closure detection** (top-left) — the image from a previously visited location that was recognised. `New ID = 191 [1]` means 191 keyframes accumulated and 1 loop closure detected
+- **3D Map** (right) — the accumulated point cloud with yellow feature points tracked across frames. The pink line is the camera trajectory; the blue/green axes show the current camera pose
+- **Odometry** (bottom-left) — the live camera view with feature points overlaid, showing active tracking
 
-The map grows as the camera moves and persists between frames — unlike the occupancy grid in Phase 2, which only showed the current frame. Loop closure corrects drift when the camera returns to a previously visited location.
+### RViz2 — Dense 3D Reconstruction
+
+![RViz2 showing the accumulated 3D point cloud map of a room](phase3_slam_rviz.png)
+
+The RViz2 view shows the dense coloured point cloud map accumulated as the camera moved through the room. The wall structure, floor, and furniture are clearly reconstructed in 3D. The coordinate axes at the camera origin show position and orientation within the map. The teal 2D occupancy grid on the floor is generated automatically by RTAB-Map alongside the 3D map.
+
+The map persists between frames — unlike the occupancy grid in Phase 2 which only showed the current frame. Loop closure corrects accumulated drift when the camera returns to a previously visited location.
 
 ---
 
